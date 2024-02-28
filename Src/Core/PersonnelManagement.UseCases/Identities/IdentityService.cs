@@ -31,7 +31,45 @@ public class IdentityService : IIdentityService
 
         await StopIfWrongUserNameOrPassword(dto.Password, user!);
         
-        return GenerateToken(user!.Id);
+        var userRoles = await _userManager.GetRolesAsync(user!);
+
+        return GenerateToken(user!.Id, userRoles);
+    }
+
+    public async Task<string> RegisterUser(RegisterUserDto dto)
+    {
+        StopIfDuplicatedPhoneNumber(dto.PhoneNumber);
+
+        var user = new User
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = dto.Name,
+            UserName = dto.Name + Guid.NewGuid(),
+            LastName = dto.LastName,
+            PhoneNumber = dto.PhoneNumber,
+            Email = dto.Email,
+            CreationDate = DateTime.Now.ToUniversalTime()
+        };
+
+        var result = await _userManager.CreateAsync(user, dto.Password);
+
+        StopIfCreateUserFailed(result);
+
+        return user.Id;
+    }
+
+    private void StopIfDuplicatedPhoneNumber(string phoneNumber)
+    {
+        var isDuplicatedPhoneNumber = _userManager.Users
+            .Any(_ => _.PhoneNumber == phoneNumber);
+        if (isDuplicatedPhoneNumber)
+            throw new DuplicatedPhoneNumberException();
+    }
+
+    private static void StopIfCreateUserFailed(IdentityResult result)
+    {
+        if (!result.Succeeded)
+            throw new FailedCreateUserException();
     }
 
     private static void StopIfUserNotFound(User? user)
@@ -47,14 +85,16 @@ public class IdentityService : IIdentityService
             throw new WrongUserNameOrPasswordException();
     }
     
-    private string GenerateToken(string userId)
+    private string GenerateToken(string userId, IList<string> userRoles)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_jwtBearerTokenSettings.SecretKey);
 
         var tokenClaims = new ClaimsIdentity();
         tokenClaims.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));
-
+        
+        WriteUserRolesToTokenClaims(ref tokenClaims, userRoles);
+        
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = tokenClaims,
@@ -68,5 +108,15 @@ public class IdentityService : IIdentityService
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
+    }
+    
+    private static void WriteUserRolesToTokenClaims(
+        ref ClaimsIdentity tokenClaims, 
+        IEnumerable<string> userRoles)
+    {
+        foreach (var role in userRoles)
+        {
+            tokenClaims.AddClaim(new Claim(ClaimTypes.Role, role));
+        }
     }
 }

@@ -9,5 +9,4 @@ public class User : IdentityUser<string>
     public string PhoneNumber { get; set; }
     public DateTime CreationDate { get; set; }
     public string? Email { get; set; }
-    public UserRefreshToken? RefreshToken { get; set; }
 }

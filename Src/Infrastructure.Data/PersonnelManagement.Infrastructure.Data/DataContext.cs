@@ -9,7 +9,7 @@ public class DataContext : IdentityDbContext<
     User,
     Role,
     string,
-    UserClaim,
+    IdentityUserClaim<string>,
     UserRole,
     IdentityUserLogin<string>,
     IdentityRoleClaim<string>,

@@ -25,4 +25,11 @@ public class IdentitiesController : ControllerBase
             AccessToken = await _identityService.LoginUser(dto)
         });
     }
+    
+    [HttpPost("register-personnel")]
+    [Authorize(Roles = "Admin")]
+    public async Task<string> RegisterUser(RegisterUserDto dto)
+    {
+        return await _identityService.RegisterUser(dto);
+    }
 }

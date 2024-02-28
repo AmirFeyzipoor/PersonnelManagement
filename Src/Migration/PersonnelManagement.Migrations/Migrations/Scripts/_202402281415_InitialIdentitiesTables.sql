@@ -43,25 +43,6 @@ CREATE TABLE [Users] (
 );
 GO
 
-CREATE TABLE [UserClaims] (
-    [Id] int NOT NULL IDENTITY,
-    [UserId] nvarchar(450) NOT NULL,
-    [ClaimType] nvarchar(max) NULL,
-    [ClaimValue] nvarchar(max) NULL,
-    CONSTRAINT [PK_UserClaims] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_UserClaims_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
-);
-GO
-
-CREATE TABLE [UserRefreshTokens] (
-    [UserId] nvarchar(450) NOT NULL,
-    [Token] nvarchar(max) NOT NULL,
-    [RefreshTokenExpiryTime] datetime2 NOT NULL,
-    CONSTRAINT [PK_UserRefreshTokens] PRIMARY KEY ([UserId]),
-    CONSTRAINT [FK_UserRefreshTokens_Users_UserId] FOREIGN KEY ([UserId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
-);
-GO
-
 CREATE TABLE [UserRoles] (
     [UserId] nvarchar(450) NOT NULL,
     [RoleId] nvarchar(450) NOT NULL,
@@ -74,13 +55,7 @@ GO
 CREATE UNIQUE INDEX [RoleNameIndex] ON [Roles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
 GO
 
-CREATE INDEX [IX_UserClaims_UserId] ON [UserClaims] ([UserId]);
-GO
-
 CREATE INDEX [IX_UserRoles_RoleId] ON [UserRoles] ([RoleId]);
-GO
-
-CREATE INDEX [EmailIndex] ON [Users] ([NormalizedEmail]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])

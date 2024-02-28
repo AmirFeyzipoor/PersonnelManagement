@@ -6,4 +6,5 @@ namespace PersonnelManagement.UseCases.Identities.Contracts;
 public interface IIdentityService : Service
 {
     Task<string> LoginUser(LoginUserDto dto);
+    Task<string> RegisterUser(RegisterUserDto dto);
 }

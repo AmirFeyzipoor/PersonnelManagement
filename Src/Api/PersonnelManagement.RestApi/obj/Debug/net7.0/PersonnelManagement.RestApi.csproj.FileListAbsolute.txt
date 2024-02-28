@@ -128,3 +128,4 @@ E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\De
 E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\Debug\net7.0\runtimes\browser\lib\net7.0\System.Text.Encodings.Web.dll
 E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\Debug\net7.0\PersonnelManagement.Migrations.dll
 E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\Debug\net7.0\PersonnelManagement.Migrations.pdb
+E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
