@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "4weYu5hTizMcIInv8BmQrXz4dehVe9Cx5JqVV2i0B08=",
+  "Source": "PersonnelManagement.RestApi",
+  "BasePath": "_content/PersonnelManagement.RestApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

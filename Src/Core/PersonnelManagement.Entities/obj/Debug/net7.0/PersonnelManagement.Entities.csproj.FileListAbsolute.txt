@@ -1,0 +1,12 @@
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\bin\Debug\net7.0\PersonnelManagement.Entities.deps.json
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\bin\Debug\net7.0\PersonnelManagement.Entities.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\bin\Debug\net7.0\PersonnelManagement.Entities.pdb
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\PersonnelManagement.Entities.csproj.AssemblyReference.cache
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\PersonnelManagement.Entities.GeneratedMSBuildEditorConfig.editorconfig
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\PersonnelManagement.Entities.AssemblyInfoInputs.cache
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\PersonnelManagement.Entities.AssemblyInfo.cs
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\PersonnelManagement.Entities.csproj.CoreCompileInputs.cache
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\PersonnelManagement.Entities.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\refint\PersonnelManagement.Entities.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\PersonnelManagement.Entities.pdb
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.Entities\obj\Debug\net7.0\ref\PersonnelManagement.Entities.dll

@@ -1,0 +1,11 @@
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\PersonnelManagement.UseCases.deps.json
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\PersonnelManagement.UseCases.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\PersonnelManagement.UseCases.pdb
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.GeneratedMSBuildEditorConfig.editorconfig
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.AssemblyInfoInputs.cache
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.AssemblyInfo.cs
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.csproj.CoreCompileInputs.cache
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\refint\PersonnelManagement.UseCases.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.pdb
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\ref\PersonnelManagement.UseCases.dll
