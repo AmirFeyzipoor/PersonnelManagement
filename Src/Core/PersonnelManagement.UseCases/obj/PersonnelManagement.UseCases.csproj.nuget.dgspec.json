@@ -109,9 +109,9 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
-            "Microsoft.Extensions.Identity.Core": {
+            "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
-              "version": "[7.0.14, )"
+              "version": "[6.24.0, )"
             }
           },
           "imports": [

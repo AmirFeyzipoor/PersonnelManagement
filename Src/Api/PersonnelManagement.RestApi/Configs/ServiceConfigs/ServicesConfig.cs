@@ -7,6 +7,9 @@ using PersonnelManagement.RestApi.Configs.ServiceConfigs.ServicesPrerequisites;
 using PersonnelManagement.UseCases.AdminServices.SeedData;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
 using PersonnelManagement.UseCases.Configurations;
+using PersonnelManagement.UseCases.Identities;
+using PersonnelManagement.UseCases.Identities.Contracts;
+using PersonnelManagement.UseCases.Identities.Contracts.TokenConfigs;
 using PersonnelManagement.UseCases.Infrastructure;
 
 namespace PersonnelManagement.RestApi.Configs.ServiceConfigs;
@@ -15,11 +18,13 @@ public static class ServicesConfig
 {
     private static readonly ConnectionStrings _dbConnectionString = new();
     private static readonly SeedDataConfigs _seedDataConfigs = new();
+    private static readonly JwtBearerTokenSettings _jwtBearerTokenSettings = new();
 
     private static void Initialized(WebApplicationBuilder builder)
     {
         builder.Configuration.Bind("ConnectionStrings", _dbConnectionString);
         builder.Configuration.Bind("SeedDataConfigs", _seedDataConfigs);
+        builder.Configuration.Bind("JwtBearerTokenSettings", _jwtBearerTokenSettings);
     }
 
     public static void ConfigureServices(this WebApplicationBuilder builder)
@@ -60,6 +65,11 @@ public static class ServicesConfig
                 .WithParameter("seedDataConfigs", _seedDataConfigs)
                 .As<ISeedDataService>()
                 .SingleInstance();
+            
+            builder.RegisterType<IdentityService>()
+                .WithParameter("jwtBearerTokenSettings", _jwtBearerTokenSettings)
+                .As<IIdentityService>()
+                .InstancePerLifetimeScope();
         }
     }
 }
