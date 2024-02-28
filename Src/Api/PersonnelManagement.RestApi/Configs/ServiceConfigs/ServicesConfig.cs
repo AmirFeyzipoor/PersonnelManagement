@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Identity;
 using PersonnelManagement.Entities.Identities;
 using PersonnelManagement.Infrastructure.Data;
 using PersonnelManagement.RestApi.Configs.ServiceConfigs.ServicesPrerequisites;
+using PersonnelManagement.UseCases.AdminServices.SeedData;
+using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
+using PersonnelManagement.UseCases.Configurations;
 using PersonnelManagement.UseCases.Infrastructure;
 
 namespace PersonnelManagement.RestApi.Configs.ServiceConfigs;
@@ -11,10 +14,12 @@ namespace PersonnelManagement.RestApi.Configs.ServiceConfigs;
 public static class ServicesConfig
 {
     private static readonly ConnectionStrings _dbConnectionString = new();
+    private static readonly SeedDataConfigs _seedDataConfigs = new();
 
     private static void Initialized(WebApplicationBuilder builder)
     {
         builder.Configuration.Bind("ConnectionStrings", _dbConnectionString);
+        builder.Configuration.Bind("SeedDataConfigs", _seedDataConfigs);
     }
 
     public static void ConfigureServices(this WebApplicationBuilder builder)
@@ -42,14 +47,19 @@ public static class ServicesConfig
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UnitOfWork>()
-                .As<IUnitOfWork>()
-                .InstancePerLifetimeScope();
-
             builder.RegisterType<DataContext>()
                 .WithParameter("connectionString", _dbConnectionString.SqlDb)
                 .AsSelf()
                 .InstancePerLifetimeScope();
+            
+            builder.RegisterType<UnitOfWork>()
+                .As<IUnitOfWork>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<SeedDataService>()
+                .WithParameter("seedDataConfigs", _seedDataConfigs)
+                .As<ISeedDataService>()
+                .SingleInstance();
         }
     }
 }

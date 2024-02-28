@@ -9,3 +9,7 @@ E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\
 E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\refint\PersonnelManagement.UseCases.dll
 E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.pdb
 E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\ref\PersonnelManagement.UseCases.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.csproj.AssemblyReference.cache
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\PersonnelManagement.Entities.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\PersonnelManagement.Entities.pdb
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.csproj.CopyComplete

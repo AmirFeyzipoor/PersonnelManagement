@@ -35,6 +35,9 @@
               },
               "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\PersonnelManagement.Infrastructure.Data.csproj": {
                 "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\PersonnelManagement.Infrastructure.Data.csproj"
+              },
+              "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj": {
+                "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj"
               }
             }
           }
@@ -56,6 +59,10 @@
             "Autofac.Extensions.DependencyInjection": {
               "target": "Package",
               "version": "[7.2.0, )"
+            },
+            "FluentMigrator.Runner": {
+              "target": "Package",
+              "version": "[3.3.2, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -187,7 +194,11 @@
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.Entities\\PersonnelManagement.Entities.csproj": {
+                "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.Entities\\PersonnelManagement.Entities.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -199,6 +210,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.Extensions.Identity.Core": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -277,6 +294,89 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj",
+        "projectName": "PersonnelManagement.Migrations",
+        "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj",
+        "packagesPath": "C:\\Users\\Amir\\.nuget\\packages\\",
+        "outputPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Amir\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://azure.taavserver.ir:81/Taav/ERP/_packaging/TaavNuget/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "FluentMigrator.Runner": {
+              "target": "Package",
+              "version": "[3.3.2, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            },
+            "Microsoft.Extensions.Configuration.CommandLine": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            },
+            "Microsoft.Extensions.Configuration.EnvironmentVariables": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
             }
           },
           "imports": [

@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PersonnelManagement.Infrastructure.Data.Migrations
 {
-    /// <inheritdoc />
     public partial class InitialIdentitiesTables : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(

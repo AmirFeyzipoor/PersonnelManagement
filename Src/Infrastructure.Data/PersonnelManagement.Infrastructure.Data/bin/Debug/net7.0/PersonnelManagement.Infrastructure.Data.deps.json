@@ -678,6 +678,10 @@
         }
       },
       "PersonnelManagement.UseCases/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Identity.Core": "7.0.14",
+          "PersonnelManagement.Entities": "1.0.0"
+        },
         "runtime": {
           "PersonnelManagement.UseCases.dll": {}
         }

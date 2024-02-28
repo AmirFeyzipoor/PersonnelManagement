@@ -12,7 +12,7 @@ using PersonnelManagement.Infrastructure.Data;
 namespace PersonnelManagement.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240228065501_InitialIdentitiesTables")]
+    [Migration("20240228100739_InitialIdentitiesTables")]
     partial class InitialIdentitiesTables
     {
         /// <inheritdoc />

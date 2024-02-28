@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14">
           <PrivateAssets>all</PrivateAssets>
@@ -26,6 +27,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Core\PersonnelManagement.Entities\PersonnelManagement.Entities.csproj" />
       <ProjectReference Include="..\..\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\PersonnelManagement.Infrastructure.Data.csproj" />
+      <ProjectReference Include="..\..\Migration\PersonnelManagement.Migrations\PersonnelManagement.Migrations.csproj" />
     </ItemGroup>
 
 </Project>

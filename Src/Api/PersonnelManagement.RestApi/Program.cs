@@ -1,8 +1,12 @@
+using PersonnelManagement.RestApi.Configs.MigrationConfigs;
 using PersonnelManagement.RestApi.Configs.ServiceConfigs;
+using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.ConfigureServices();
+
+builder.UpdateDataBases();
 
 builder.Services.AddControllers();
 
@@ -20,8 +24,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+SeedDatabase();
+
 app.UseAuthorization();
 
 app.MapControllers();
+
+void SeedDatabase()
+{
+    using var scope = app!.Services.CreateScope();
+    var dbInitializer = scope.ServiceProvider.GetRequiredService<ISeedDataService>();
+    dbInitializer.Execute();
+}
 
 app.Run();
