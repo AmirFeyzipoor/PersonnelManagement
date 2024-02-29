@@ -8,15 +8,16 @@ using PersonnelManagement.UseCases.Identities.Contracts;
 using PersonnelManagement.UseCases.Identities.Contracts.Dtos;
 using PersonnelManagement.UseCases.Identities.Contracts.Exceptions;
 using PersonnelManagement.UseCases.Identities.Contracts.TokenConfigs;
+using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
 
 namespace PersonnelManagement.UseCases.Identities;
 
-public class IdentityService : IIdentityService
+public class PersonnelService : IPersonnelService
 {
     private readonly UserManager<User> _userManager;
     private readonly JwtBearerTokenSettings _jwtBearerTokenSettings;
 
-    public IdentityService(UserManager<User> userManager,
+    public PersonnelService(UserManager<User> userManager,
         JwtBearerTokenSettings jwtBearerTokenSettings)
     {
         _userManager = userManager;
@@ -26,17 +27,17 @@ public class IdentityService : IIdentityService
     public async Task<string> LoginUser(LoginUserDto dto)
     {
         var user = _userManager.Users.FirstOrDefault(_ => _.PhoneNumber == dto.PhoneNumber);
-        
+
         StopIfUserNotFound(user);
 
         await StopIfWrongUserNameOrPassword(dto.Password, user!);
-        
+
         var userRoles = await _userManager.GetRolesAsync(user!);
 
         return GenerateToken(user!.Id, userRoles);
     }
 
-    public async Task<string> RegisterUser(RegisterUserDto dto)
+    public async Task<string> RegisterUser(RegisterPersonnelDto dto)
     {
         StopIfDuplicatedPhoneNumber(dto.PhoneNumber);
 
@@ -56,6 +57,47 @@ public class IdentityService : IIdentityService
         StopIfCreateUserFailed(result);
 
         return user.Id;
+    }
+
+    public List<GetAllPersonnelDto> GetAll(
+        GetAllPersonnelFilterDto filter,
+        ISort<GetAllPersonnelDto>? sort)
+    {
+        var personnel = _userManager.Users
+            .Select(_ => new GetAllPersonnelDto
+            {
+                Name = _.Name,
+                LastName = _.LastName,
+                PhoneNumber = _.PhoneNumber,
+                Email = _.Email,
+                CreationDate = _.CreationDate
+            });
+
+        personnel = DoFilterOnPersonnel(filter, personnel);
+        
+        if (sort != null)
+            personnel = personnel.Sort(sort);
+
+        return personnel.ToList();
+    }
+
+    private static IQueryable<GetAllPersonnelDto> DoFilterOnPersonnel(
+        GetAllPersonnelFilterDto filter,
+        IQueryable<GetAllPersonnelDto> personnel)
+    {
+        if (filter?.Name != null)
+        {
+            personnel = personnel.Where(
+                _ => _.Name == filter.Name);
+        }
+        
+        if (filter?.LastName != null)
+        {
+            personnel = personnel.Where(
+                _ => _.LastName == filter.LastName);
+        }
+
+        return personnel;
     }
 
     private void StopIfDuplicatedPhoneNumber(string phoneNumber)
@@ -84,7 +126,7 @@ public class IdentityService : IIdentityService
         if (isCorrectPassword == false)
             throw new WrongUserNameOrPasswordException();
     }
-    
+
     private string GenerateToken(string userId, IList<string> userRoles)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -92,9 +134,9 @@ public class IdentityService : IIdentityService
 
         var tokenClaims = new ClaimsIdentity();
         tokenClaims.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));
-        
+
         WriteUserRolesToTokenClaims(ref tokenClaims, userRoles);
-        
+
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = tokenClaims,
@@ -109,9 +151,9 @@ public class IdentityService : IIdentityService
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
     }
-    
+
     private static void WriteUserRolesToTokenClaims(
-        ref ClaimsIdentity tokenClaims, 
+        ref ClaimsIdentity tokenClaims,
         IEnumerable<string> userRoles)
     {
         foreach (var role in userRoles)

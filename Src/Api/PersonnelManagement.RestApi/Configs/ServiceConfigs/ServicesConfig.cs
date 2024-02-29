@@ -15,6 +15,7 @@ using PersonnelManagement.UseCases.Identities;
 using PersonnelManagement.UseCases.Identities.Contracts;
 using PersonnelManagement.UseCases.Identities.Contracts.TokenConfigs;
 using PersonnelManagement.UseCases.Infrastructure;
+using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
 
 namespace PersonnelManagement.RestApi.Configs.ServiceConfigs;
 
@@ -119,9 +120,13 @@ public static class ServicesConfig
                 .As<ISeedDataService>()
                 .SingleInstance();
             
-            builder.RegisterType<IdentityService>()
+            builder.RegisterType<PersonnelService>()
                 .WithParameter("jwtBearerTokenSettings", _jwtBearerTokenSettings)
-                .As<IIdentityService>()
+                .As<IPersonnelService>()
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterType<UriSortParser>()
+                .AsSelf()
                 .InstancePerLifetimeScope();
         }
     }

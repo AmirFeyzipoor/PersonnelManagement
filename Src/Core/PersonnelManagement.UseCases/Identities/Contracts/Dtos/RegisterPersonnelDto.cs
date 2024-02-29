@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PersonnelManagement.UseCases.Identities.Contracts.Dtos;
 
-public class RegisterUserDto
+public class RegisterPersonnelDto
 {
-    public RegisterUserDto(string name, string lastName, 
+    public RegisterPersonnelDto(string name, string lastName, 
         string phoneNumber, string password)
     {
         Name = name;
