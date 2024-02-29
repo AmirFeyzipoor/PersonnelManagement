@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using PersonnelManagement.Entities.Identities;
+using PersonnelManagement.UseCases.AdminServices.SeedData.Configs;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
-using PersonnelManagement.UseCases.Configurations;
 using PersonnelManagement.UseCases.Infrastructure;
 
 namespace PersonnelManagement.UseCases.AdminServices.SeedData;

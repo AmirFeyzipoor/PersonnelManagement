@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using PersonnelManagement.RestApi.Configs.MigrationConfigs;
 using PersonnelManagement.RestApi.Configs.ServiceConfigs;
+using PersonnelManagement.RestApi.Middelwares;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,11 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+});
+app.UseMiddleware<IpBlockMiddelware>();
 
 if (app.Environment.IsDevelopment())
 {

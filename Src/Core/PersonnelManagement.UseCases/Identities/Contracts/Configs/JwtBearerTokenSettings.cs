@@ -1,4 +1,4 @@
-namespace PersonnelManagement.UseCases.Identities.Contracts.TokenConfigs;
+namespace PersonnelManagement.UseCases.Identities.Contracts.Configs;
 
 public class JwtBearerTokenSettings
 {

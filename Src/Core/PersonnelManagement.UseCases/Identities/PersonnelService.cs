@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using PersonnelManagement.Entities.Identities;
 using PersonnelManagement.UseCases.Identities.Contracts;
+using PersonnelManagement.UseCases.Identities.Contracts.Configs;
 using PersonnelManagement.UseCases.Identities.Contracts.Dtos;
 using PersonnelManagement.UseCases.Identities.Contracts.Exceptions;
-using PersonnelManagement.UseCases.Identities.Contracts.TokenConfigs;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
 
 namespace PersonnelManagement.UseCases.Identities;

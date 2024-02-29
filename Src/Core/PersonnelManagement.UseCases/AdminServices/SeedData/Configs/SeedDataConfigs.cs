@@ -1,4 +1,4 @@
-namespace PersonnelManagement.UseCases.Configurations;
+namespace PersonnelManagement.UseCases.AdminServices.SeedData.Configs;
 
 public class SeedDataConfigs
 {

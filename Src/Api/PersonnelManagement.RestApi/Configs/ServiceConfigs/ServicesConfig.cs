@@ -8,12 +8,15 @@ using Microsoft.OpenApi.Models;
 using PersonnelManagement.Entities.Identities;
 using PersonnelManagement.Infrastructure.Data;
 using PersonnelManagement.RestApi.Configs.ServiceConfigs.ServicesPrerequisites;
+using PersonnelManagement.UseCases.AdminServices.IpBlocking;
+using PersonnelManagement.UseCases.AdminServices.IpBlocking.Configs;
+using PersonnelManagement.UseCases.AdminServices.IpBlocking.Contracts;
 using PersonnelManagement.UseCases.AdminServices.SeedData;
+using PersonnelManagement.UseCases.AdminServices.SeedData.Configs;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
-using PersonnelManagement.UseCases.Configurations;
 using PersonnelManagement.UseCases.Identities;
 using PersonnelManagement.UseCases.Identities.Contracts;
-using PersonnelManagement.UseCases.Identities.Contracts.TokenConfigs;
+using PersonnelManagement.UseCases.Identities.Contracts.Configs;
 using PersonnelManagement.UseCases.Infrastructure;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
 
@@ -24,12 +27,14 @@ public static class ServicesConfig
     private static readonly ConnectionStrings _dbConnectionString = new();
     private static readonly SeedDataConfigs _seedDataConfigs = new();
     private static readonly JwtBearerTokenSettings _jwtBearerTokenSettings = new();
+    private static readonly BlockedIpOptions _blockedIpOptions = new (); 
 
     private static void Initialized(WebApplicationBuilder builder)
     {
         builder.Configuration.Bind("ConnectionStrings", _dbConnectionString);
         builder.Configuration.Bind("SeedDataConfigs", _seedDataConfigs);
         builder.Configuration.Bind("JwtBearerTokenSettings", _jwtBearerTokenSettings);
+        builder.Configuration.Bind("BlockedIpOptions", _blockedIpOptions);
     }
 
     public static void ConfigureServices(this WebApplicationBuilder builder)
@@ -96,7 +101,7 @@ public static class ServicesConfig
                         new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtBearerTokenSettings.SecretKey))
                 };
             });
-        
+
         builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
         builder.Host.ConfigureContainer<ContainerBuilder>(b => b
             .RegisterModule(new AutoFacModule()));
@@ -128,6 +133,11 @@ public static class ServicesConfig
             builder.RegisterType<UriSortParser>()
                 .AsSelf()
                 .InstancePerLifetimeScope();
+            
+            builder.RegisterType<IpBlockingService>()
+                .WithParameter("blockedIps", _blockedIpOptions.BlockedIps)
+                .As<IIpBlockingService>()
+                .InstancePerDependency();
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "E5fKIhamlrkRWS2gWfyZjtdAZTB2AZPKHYh2nPa9GVxQHFVccPaPyDYq0hJLBQsPtb6OOBQWY5h9IsPAOL5E7A==",
+  "dgSpecHash": "fo0q+vKwcqs5GRdVuvwsa0tWR+rrbh6rbodVjAqdrH97pvlahBeGVNrEHaQPho3JSn2AOfsEDqm5i1y3zKqHFA==",
   "success": true,
   "projectFilePath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.UseCases\\PersonnelManagement.UseCases.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Amir\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.14\\microsoft.aspnetcore.cryptography.keyderivation.7.0.14.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Amir\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\microsoft.extensions.identity.core\\7.0.14\\microsoft.extensions.identity.core.7.0.14.nupkg.sha512",

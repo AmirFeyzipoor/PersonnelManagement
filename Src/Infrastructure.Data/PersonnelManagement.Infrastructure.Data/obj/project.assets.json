@@ -1153,6 +1153,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "7.0.0",
           "PersonnelManagement.Entities": "1.0.0",
           "System.IdentityModel.Tokens.Jwt": "6.24.0"
         },
