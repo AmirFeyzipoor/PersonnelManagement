@@ -17,3 +17,9 @@ E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagemen
 E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\bin\Debug\net7.0\PersonnelManagement.UseCases.pdb
 E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\bin\Debug\net7.0\PersonnelManagement.Infrastructure.Data.runtimeconfig.json
 E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\obj\Debug\net7.0\PersonnelManagement.Infrastructure.Data.genruntimeconfig.cache
+E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\bin\Debug\net7.0\Microsoft.AspNetCore.Http.Abstractions.dll
+E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\bin\Debug\net7.0\System.IO.Pipelines.dll
+E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\bin\Debug\net7.0\Microsoft.Extensions.Features.dll
+E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\bin\Debug\net7.0\Microsoft.AspNetCore.Http.Features.dll
+E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\bin\Debug\net7.0\Microsoft.Net.Http.Headers.dll
+E:\SampleProjects\PersonnelManagement\Src\Infrastructure.Data\PersonnelManagement.Infrastructure.Data\bin\Debug\net7.0\Microsoft.AspNetCore.Connections.Abstractions.dll
