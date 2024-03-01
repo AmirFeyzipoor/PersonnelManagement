@@ -37,7 +37,7 @@ public class PersonnelService : IPersonnelService
         return GenerateToken(user!.Id, userRoles);
     }
 
-    public async Task<string> RegisterUser(RegisterPersonnelDto dto)
+    public async Task<User> RegisterUser(RegisterPersonnelDto dto)
     {
         StopIfDuplicatedPhoneNumber(dto.PhoneNumber);
 
@@ -56,7 +56,7 @@ public class PersonnelService : IPersonnelService
 
         StopIfCreateUserFailed(result);
 
-        return user.Id;
+        return user;
     }
 
     public List<GetAllPersonnelDto> GetAll(

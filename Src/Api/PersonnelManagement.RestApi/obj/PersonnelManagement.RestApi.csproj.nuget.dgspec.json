@@ -215,6 +215,14 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "IPE.SmsIr": {
+              "target": "Package",
+              "version": "[1.0.5, )"
+            },
+            "Kavenegar": {
+              "target": "Package",
+              "version": "[1.2.4, )"
+            },
             "Microsoft.Extensions.Configuration.Abstractions": {
               "target": "Package",
               "version": "[7.0.0, )"

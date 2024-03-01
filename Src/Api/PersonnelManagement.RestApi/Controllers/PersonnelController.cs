@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PersonnelManagement.UseCases.Identities.Contracts;
 using PersonnelManagement.UseCases.Identities.Contracts.Dtos;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
+using PersonnelManagement.UseCases.Notifications.Contracts;
 
 namespace PersonnelManagement.RestApi.Controllers;
 
@@ -12,12 +13,16 @@ public class PersonnelController : ControllerBase
 {
     private readonly IPersonnelService _personnelService;
     private readonly UriSortParser _sortParser;
+    private readonly INotificationService _notificationService;
 
-    public PersonnelController(IPersonnelService personnelService,
-        UriSortParser sortParser)
+    public PersonnelController(
+        IPersonnelService personnelService,
+        UriSortParser sortParser,
+        INotificationService notificationService)
     {
         _personnelService = personnelService;
         _sortParser = sortParser;
+        _notificationService = notificationService;
     }
 
     [HttpPost("login")]
@@ -34,7 +39,23 @@ public class PersonnelController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<string> RegisterPersonnel(RegisterPersonnelDto dto)
     {
-        return await _personnelService.RegisterUser(dto);
+        var user =  await _personnelService.RegisterUser(dto);
+
+        await _notificationService.SendSms(
+            messageText: "با عرض خوش امدگویی ، ثبت نام شما" +
+                         "در سامانه ی مدیریت پرسنل با موفقیت انجام شد",
+            phoneNumber: user.PhoneNumber);
+
+        if (user.Email != null)
+        {
+            await _notificationService.SendEmail(
+                toEmail: user.Email,
+                subject: $"Dear {user.Name} , welcome to the personnel Management system",
+                message: "Welcome, your registration in the personnel management system" +
+                         " has been done successfully");
+        }
+        
+        return user.Id;
     }
     
     [HttpGet]

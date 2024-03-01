@@ -14,11 +14,19 @@ using PersonnelManagement.UseCases.AdminServices.IpBlocking.Contracts;
 using PersonnelManagement.UseCases.AdminServices.SeedData;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Configs;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
+using PersonnelManagement.UseCases.EmailServices;
+using PersonnelManagement.UseCases.EmailServices.Configs;
+using PersonnelManagement.UseCases.EmailServices.Contracts;
 using PersonnelManagement.UseCases.Identities;
 using PersonnelManagement.UseCases.Identities.Contracts;
 using PersonnelManagement.UseCases.Identities.Contracts.Configs;
 using PersonnelManagement.UseCases.Infrastructure;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
+using PersonnelManagement.UseCases.Notifications;
+using PersonnelManagement.UseCases.Notifications.Contracts;
+using PersonnelManagement.UseCases.SmsServices;
+using PersonnelManagement.UseCases.SmsServices.Configs;
+using PersonnelManagement.UseCases.SmsServices.Contracts;
 
 namespace PersonnelManagement.RestApi.Configs.ServiceConfigs;
 
@@ -28,6 +36,8 @@ public static class ServicesConfig
     private static readonly SeedDataConfigs _seedDataConfigs = new();
     private static readonly JwtBearerTokenSettings _jwtBearerTokenSettings = new();
     private static readonly BlockedIpOptions _blockedIpOptions = new (); 
+    private static readonly SmsSettings _smsSettings = new (); 
+    private static readonly SmtpSettings _smtpSettings = new();
 
     private static void Initialized(WebApplicationBuilder builder)
     {
@@ -35,6 +45,8 @@ public static class ServicesConfig
         builder.Configuration.Bind("SeedDataConfigs", _seedDataConfigs);
         builder.Configuration.Bind("JwtBearerTokenSettings", _jwtBearerTokenSettings);
         builder.Configuration.Bind("BlockedIpOptions", _blockedIpOptions);
+        builder.Configuration.Bind("SmsSettings", _smsSettings);
+        builder.Configuration.Bind("SmtpSettings", _smtpSettings);
     }
 
     public static void ConfigureServices(this WebApplicationBuilder builder)
@@ -116,6 +128,12 @@ public static class ServicesConfig
                 .AsSelf()
                 .InstancePerLifetimeScope();
             
+            builder.RegisterAssemblyTypes(
+                    typeof(NotificationService).Assembly)
+                .AssignableTo<Service>()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+            
             builder.RegisterType<UnitOfWork>()
                 .As<IUnitOfWork>()
                 .InstancePerLifetimeScope();
@@ -138,6 +156,16 @@ public static class ServicesConfig
                 .WithParameter("blockedIps", _blockedIpOptions.BlockedIps)
                 .As<IIpBlockingService>()
                 .InstancePerDependency();
+
+            builder.RegisterType<KavenegarSmsService>()
+                .WithParameter("smsSettings", _smsSettings)
+                .As<ISmsService>()
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterType<EmailService>()
+                .WithParameter("smtpSettings", _smtpSettings)
+                .As<IEmailService>()
+                .InstancePerLifetimeScope();
         }
     }
 }
