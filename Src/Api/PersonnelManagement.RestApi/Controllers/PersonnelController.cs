@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PersonnelManagement.UseCases.Identities.Contracts;
-using PersonnelManagement.UseCases.Identities.Contracts.Dtos;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
-using PersonnelManagement.UseCases.Notifications.Contracts;
+using PersonnelManagement.UseCases.Notifications;
+using PersonnelManagement.UseCases.Personnel.Contracts;
+using PersonnelManagement.UseCases.Personnel.Contracts.Dtos;
 
 namespace PersonnelManagement.RestApi.Controllers;
 

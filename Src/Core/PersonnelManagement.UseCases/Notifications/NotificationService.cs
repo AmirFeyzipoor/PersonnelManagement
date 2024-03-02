@@ -1,6 +1,5 @@
-using PersonnelManagement.UseCases.EmailServices.Contracts;
-using PersonnelManagement.UseCases.Notifications.Contracts;
-using PersonnelManagement.UseCases.SmsServices.Contracts;
+using PersonnelManagement.UseCases.Notifications.EmailServices.Contracts;
+using PersonnelManagement.UseCases.Notifications.SmsServices.Contracts;
 
 namespace PersonnelManagement.UseCases.Notifications;
 

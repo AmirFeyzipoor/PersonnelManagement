@@ -14,19 +14,18 @@ using PersonnelManagement.UseCases.AdminServices.IpBlocking.Contracts;
 using PersonnelManagement.UseCases.AdminServices.SeedData;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Configs;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
-using PersonnelManagement.UseCases.EmailServices;
-using PersonnelManagement.UseCases.EmailServices.Configs;
-using PersonnelManagement.UseCases.EmailServices.Contracts;
-using PersonnelManagement.UseCases.Identities;
-using PersonnelManagement.UseCases.Identities.Contracts;
-using PersonnelManagement.UseCases.Identities.Contracts.Configs;
 using PersonnelManagement.UseCases.Infrastructure;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
 using PersonnelManagement.UseCases.Notifications;
-using PersonnelManagement.UseCases.Notifications.Contracts;
-using PersonnelManagement.UseCases.SmsServices;
-using PersonnelManagement.UseCases.SmsServices.Configs;
-using PersonnelManagement.UseCases.SmsServices.Contracts;
+using PersonnelManagement.UseCases.Notifications.EmailServices;
+using PersonnelManagement.UseCases.Notifications.EmailServices.Configs;
+using PersonnelManagement.UseCases.Notifications.EmailServices.Contracts;
+using PersonnelManagement.UseCases.Notifications.SmsServices;
+using PersonnelManagement.UseCases.Notifications.SmsServices.Configs;
+using PersonnelManagement.UseCases.Notifications.SmsServices.Contracts;
+using PersonnelManagement.UseCases.Personnel;
+using PersonnelManagement.UseCases.Personnel.Contracts;
+using PersonnelManagement.UseCases.Personnel.Contracts.Configs;
 
 namespace PersonnelManagement.RestApi.Configs.ServiceConfigs;
 

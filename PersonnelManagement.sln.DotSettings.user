@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=938e61f4_002D7512_002D40bf_002D8a7d_002De3f3b1c555f2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="RegisterUser_register_user_properly" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::5D0AAD96-7316-4216-84EB-EA7B7BB2A993::net7.0::PersonnelManagement.UnitTest.PersonnelServiceTests.RegisterUser_register_user_properly&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::5D0AAD96-7316-4216-84EB-EA7B7BB2A993::net7.0::PersonnelManagement.UnitTest.PersonnelServiceTests.RegisterUser_throw_InvalidPhoneNumberException_when_phoneNumber_is_invalid&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::0164F914-E917-492F-B8B4-5B9149C27B63::net7.0::PersonnelManagement.IntegrationTest.Personnel.Add.Success.Run&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
