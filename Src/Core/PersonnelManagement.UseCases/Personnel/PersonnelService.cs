@@ -19,6 +19,8 @@ public class PersonnelService : IPersonnelService
     private readonly UserManager<User> _userManager;
     private readonly JwtBearerTokenSettings _jwtBearerTokenSettings;
 
+    private static readonly object _lock = new();
+
     public PersonnelService(UserManager<User> userManager,
         JwtBearerTokenSettings jwtBearerTokenSettings)
     {
@@ -39,30 +41,33 @@ public class PersonnelService : IPersonnelService
         return GenerateToken(user!.Id, userRoles);
     }
 
-    public async Task<User> RegisterUser(RegisterPersonnelDto dto)
+    public Task<User> RegisterUser(RegisterPersonnelDto dto)
     {
         StopIfInvalidPhoneNumber(dto.PhoneNumber);
-
-        StopIfDuplicatedPhoneNumber(dto.PhoneNumber);
-
-        var user = new User
+        
+        lock(_lock)
         {
-            Id = Guid.NewGuid().ToString(),
-            Name = dto.Name,
-            UserName = dto.Name + Guid.NewGuid(),
-            LastName = dto.LastName,
-            PhoneNumber = dto.PhoneNumber,
-            Email = dto.Email,
-            CreationDate = DateTime.Now.ToUniversalTime()
-        };
+            StopIfDuplicatedPhoneNumber(dto.PhoneNumber);
 
-        var result = await _userManager.CreateAsync(user, dto.Password);
+            var user = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = dto.Name,
+                UserName = RemoveWhitespace(dto.Name + Guid.NewGuid()),
+                LastName = dto.LastName,
+                PhoneNumber = dto.PhoneNumber,
+                Email = dto.Email,
+                CreationDate = DateTime.Now.ToUniversalTime()
+            };
 
-        StopIfCreateUserFailed(result);
-
-        return user;
+            var result = _userManager.CreateAsync(user, dto.Password);
+            
+            StopIfCreateUserFailed(result.Result);
+        
+            return Task.FromResult(user);
+        }
     }
-    
+
     public List<GetAllPersonnelDto> GetAll(
         GetAllPersonnelFilterDto filter,
         ISort<GetAllPersonnelDto>? sort)
@@ -78,7 +83,7 @@ public class PersonnelService : IPersonnelService
             });
 
         personnel = DoFilterOnPersonnel(filter, personnel);
-        
+
         if (sort != null)
             personnel = personnel.Sort(sort);
 
@@ -94,7 +99,7 @@ public class PersonnelService : IPersonnelService
             personnel = personnel.Where(
                 _ => _.Name == filter.Name);
         }
-        
+
         if (filter?.LastName != null)
         {
             personnel = personnel.Where(
@@ -165,7 +170,7 @@ public class PersonnelService : IPersonnelService
             tokenClaims.AddClaim(new Claim(ClaimTypes.Role, role));
         }
     }
-    
+
     private static void StopIfInvalidPhoneNumber(string phoneNumber)
     {
         var mobileReg = @"^(0|0098|\+98)9(0[1-5]|[1 3]\d|2[0-2]|98)\d{7}$";
@@ -175,5 +180,11 @@ public class PersonnelService : IPersonnelService
             throw new InvalidPhoneNumberException();
         }
     }
-
+    
+    public static string RemoveWhitespace(string input)
+    {
+        return new string(input.ToCharArray()
+            .Where(c => !Char.IsWhiteSpace(c))
+            .ToArray());
+    }
 }

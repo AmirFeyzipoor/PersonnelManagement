@@ -18,11 +18,13 @@ public class UserEntityMap : IEntityTypeConfiguration<User>
             .HasMaxLength(50)
             .IsRequired();
         
-        builder.Property(_ => _.PhoneNumber).IsRequired();
+        builder.Property(_ => _.PhoneNumber).IsRequired(false);
         
         builder.Property(_ => _.CreationDate).IsRequired();
         
         builder.Property(_ => _.Email)
             .IsRequired(false);
+        
+        builder.Property(p => p.ConcurrencyStamp).IsConcurrencyToken();
     }
 }
