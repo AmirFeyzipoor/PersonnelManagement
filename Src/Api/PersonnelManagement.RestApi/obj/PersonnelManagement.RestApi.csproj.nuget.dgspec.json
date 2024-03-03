@@ -297,6 +297,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.15, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.14, )"

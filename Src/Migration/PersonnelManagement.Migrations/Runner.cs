@@ -16,7 +16,7 @@ static class Runner
         CreateDatabase(connectionString);
 
         var runner = CreateRunner(connectionString, options);
-        runner.MigrateUp();
+        runner.MigrateDown(202403021130);
     }
 
     private static void CreateDatabase(string connectionString)

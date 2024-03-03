@@ -4,6 +4,112 @@
     "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\PersonnelManagement.IntegrationTest.csproj": {}
   },
   "projects": {
+    "E:\\SampleProjects\\PersonnelManagement\\Src\\Api\\PersonnelManagement.RestApi\\PersonnelManagement.RestApi.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\SampleProjects\\PersonnelManagement\\Src\\Api\\PersonnelManagement.RestApi\\PersonnelManagement.RestApi.csproj",
+        "projectName": "PersonnelManagement.RestApi",
+        "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Api\\PersonnelManagement.RestApi\\PersonnelManagement.RestApi.csproj",
+        "packagesPath": "C:\\Users\\Amir\\.nuget\\packages\\",
+        "outputPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Api\\PersonnelManagement.RestApi\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Amir\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://azure.taavserver.ir:81/Taav/ERP/_packaging/TaavNuget/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.Entities\\PersonnelManagement.Entities.csproj": {
+                "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.Entities\\PersonnelManagement.Entities.csproj"
+              },
+              "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\PersonnelManagement.Infrastructure.Data.csproj": {
+                "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\PersonnelManagement.Infrastructure.Data.csproj"
+              },
+              "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj": {
+                "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Autofac": {
+              "target": "Package",
+              "version": "[7.0.1, )"
+            },
+            "Autofac.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[7.2.0, )"
+            },
+            "FluentMigrator.Runner": {
+              "target": "Package",
+              "version": "[3.3.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.13, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.14, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.Entities\\PersonnelManagement.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -146,14 +252,14 @@
         }
       }
     },
-    "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\PersonnelManagement.IntegrationTest.csproj": {
+    "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\PersonnelManagement.Infrastructure.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\PersonnelManagement.IntegrationTest.csproj",
-        "projectName": "PersonnelManagement.IntegrationTest",
-        "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\PersonnelManagement.IntegrationTest.csproj",
+        "projectUniqueName": "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\PersonnelManagement.Infrastructure.Data.csproj",
+        "projectName": "PersonnelManagement.Infrastructure.Data",
+        "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\PersonnelManagement.Infrastructure.Data.csproj",
         "packagesPath": "C:\\Users\\Amir\\.nuget\\packages\\",
-        "outputPath": "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\obj\\",
+        "outputPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -191,9 +297,183 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.15, )"
+            },
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj",
+        "projectName": "PersonnelManagement.Migrations",
+        "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\PersonnelManagement.Migrations.csproj",
+        "packagesPath": "C:\\Users\\Amir\\.nuget\\packages\\",
+        "outputPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Migration\\PersonnelManagement.Migrations\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Amir\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://azure.taavserver.ir:81/Taav/ERP/_packaging/TaavNuget/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "FluentMigrator.Runner": {
+              "target": "Package",
+              "version": "[3.3.2, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            },
+            "Microsoft.Extensions.Configuration.CommandLine": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            },
+            "Microsoft.Extensions.Configuration.EnvironmentVariables": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\PersonnelManagement.IntegrationTest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\PersonnelManagement.IntegrationTest.csproj",
+        "projectName": "PersonnelManagement.IntegrationTest",
+        "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\PersonnelManagement.IntegrationTest.csproj",
+        "packagesPath": "C:\\Users\\Amir\\.nuget\\packages\\",
+        "outputPath": "E:\\SampleProjects\\PersonnelManagement\\Test\\PersonnelManagement.IntegrationTest\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Amir\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://azure.taavserver.ir:81/Taav/ERP/_packaging/TaavNuget/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "E:\\SampleProjects\\PersonnelManagement\\Src\\Api\\PersonnelManagement.RestApi\\PersonnelManagement.RestApi.csproj": {
+                "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Api\\PersonnelManagement.RestApi\\PersonnelManagement.RestApi.csproj"
+              },
+              "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.Entities\\PersonnelManagement.Entities.csproj": {
+                "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.Entities\\PersonnelManagement.Entities.csproj"
+              },
+              "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.UseCases\\PersonnelManagement.UseCases.csproj": {
+                "projectPath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Core\\PersonnelManagement.UseCases\\PersonnelManagement.UseCases.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
             "FluentAssertions": {
               "target": "Package",
               "version": "[6.6.0, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0-rc.2.23479.6, )"
             },
             "Microsoft.Extensions.Identity.Core": {
               "target": "Package",

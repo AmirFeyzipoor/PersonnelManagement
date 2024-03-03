@@ -11,6 +11,7 @@
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="6.6.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-rc.2.23479.6" />
         <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.14" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
         <PackageReference Include="Moq" Version="4.17.2" />
@@ -26,8 +27,22 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Src\Api\PersonnelManagement.RestApi\PersonnelManagement.RestApi.csproj" />
       <ProjectReference Include="..\..\Src\Core\PersonnelManagement.Entities\PersonnelManagement.Entities.csproj" />
       <ProjectReference Include="..\..\Src\Core\PersonnelManagement.UseCases\PersonnelManagement.UseCases.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\7.0.13\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="appsettings.json" />
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>

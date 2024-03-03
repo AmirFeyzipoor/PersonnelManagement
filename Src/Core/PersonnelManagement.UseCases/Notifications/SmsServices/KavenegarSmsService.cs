@@ -31,11 +31,7 @@ public class KavenegarSmsService : ISmsService
                 MessageType.MobileMemory,
                 DateTime.MinValue);
         }
-        catch (Kavenegar.Exceptions.ApiException ex)
-        {
-            _logger.LogError(ex.Message);
-        }
-        catch (Kavenegar.Exceptions.HttpException ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex.Message);
         }
@@ -53,11 +49,7 @@ public class KavenegarSmsService : ISmsService
                 phoneNumber,
                 messageText);
         }
-        catch (Kavenegar.Exceptions.ApiException ex)
-        {
-            _logger.LogError(ex.Message);
-        }
-        catch (Kavenegar.Exceptions.HttpException ex)
+        catch (Exception ex)
         {
             _logger.LogError(ex.Message);
         }

@@ -13,3 +13,9 @@ E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\
 E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\PersonnelManagement.Entities.dll
 E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\PersonnelManagement.Entities.pdb
 E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\obj\Debug\net7.0\PersonnelManagement.UseCases.csproj.CopyComplete
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\Microsoft.AspNetCore.Http.Abstractions.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\System.IO.Pipelines.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\Microsoft.Extensions.Features.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\Microsoft.AspNetCore.Http.Features.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\Microsoft.Net.Http.Headers.dll
+E:\SampleProjects\PersonnelManagement\Src\Core\PersonnelManagement.UseCases\bin\Debug\net7.0\Microsoft.AspNetCore.Connections.Abstractions.dll

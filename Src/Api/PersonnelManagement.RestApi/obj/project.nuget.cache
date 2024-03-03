@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "psLixHUl7x9FQRTtNZOWHGBeuka1gENaygSvA5hRp3y59JmlEvonlb6qRp8tfx1N2MQLFtzS/SiGb/jezQSI2g==",
+  "dgSpecHash": "IPcVDpeUvYha4iTEUJdarwrwxgTsqRqrANMTrme4rKCpmV7RlCN0LFRwAexMt7AgXGWG4+NfsZCruWw4brldjg==",
   "success": true,
   "projectFilePath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Api\\PersonnelManagement.RestApi\\PersonnelManagement.RestApi.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Amir\\.nuget\\packages\\autofac.extensions.dependencyinjection\\7.2.0\\autofac.extensions.dependencyinjection.7.2.0.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\Amir\\.nuget\\packages\\dapper\\2.1.15\\dapper.2.1.15.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\fluentmigrator\\3.3.2\\fluentmigrator.3.3.2.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\fluentmigrator.abstractions\\3.3.2\\fluentmigrator.abstractions.3.3.2.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\fluentmigrator.extensions.oracle\\3.3.2\\fluentmigrator.extensions.oracle.3.3.2.nupkg.sha512",

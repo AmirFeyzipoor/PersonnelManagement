@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PersonnelManagement.Entities.Identities;
 using PersonnelManagement.Infrastructure.Data;
+using PersonnelManagement.Infrastructure.Data.Identities;
 using PersonnelManagement.RestApi.Configs.ServiceConfigs.ServicesPrerequisites;
 using PersonnelManagement.UseCases.AdminServices.IpBlocking;
 using PersonnelManagement.UseCases.AdminServices.IpBlocking.Configs;
@@ -16,6 +17,8 @@ using PersonnelManagement.UseCases.AdminServices.SeedData.Configs;
 using PersonnelManagement.UseCases.AdminServices.SeedData.Contracts;
 using PersonnelManagement.UseCases.Infrastructure;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
+using PersonnelManagement.UseCases.Infrastructure.TokenManager;
+using PersonnelManagement.UseCases.Infrastructure.TokenManager.Contracts;
 using PersonnelManagement.UseCases.Notifications;
 using PersonnelManagement.UseCases.Notifications.EmailServices;
 using PersonnelManagement.UseCases.Notifications.EmailServices.Configs;
@@ -127,6 +130,11 @@ public static class ServicesConfig
                 .AsSelf()
                 .InstancePerLifetimeScope();
             
+            builder.RegisterType<DapperDataContext>()
+                .WithParameter("connectionString", _dbConnectionString.SqlDb)
+                .AsSelf()
+                .SingleInstance();
+            
             builder.RegisterAssemblyTypes(
                     typeof(NotificationService).Assembly)
                 .AssignableTo<Service>()
@@ -142,9 +150,10 @@ public static class ServicesConfig
                 .As<ISeedDataService>()
                 .SingleInstance();
             
-            builder.RegisterType<PersonnelService>()
-                .WithParameter("jwtBearerTokenSettings", _jwtBearerTokenSettings)
-                .As<IPersonnelService>()
+            builder.RegisterType<TokenManagerService>()
+                .WithParameter("jwtBearerTokenSettings",
+                    _jwtBearerTokenSettings)
+                .As<ITokenManagerService>()
                 .InstancePerLifetimeScope();
             
             builder.RegisterType<UriSortParser>()
@@ -164,6 +173,12 @@ public static class ServicesConfig
             builder.RegisterType<EmailService>()
                 .WithParameter("smtpSettings", _smtpSettings)
                 .As<IEmailService>()
+                .InstancePerLifetimeScope();
+            
+            builder.RegisterAssemblyTypes(
+                    typeof(DapperPersonnelRepository).Assembly)
+                .AssignableTo<Repository>()
+                .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
         }
     }

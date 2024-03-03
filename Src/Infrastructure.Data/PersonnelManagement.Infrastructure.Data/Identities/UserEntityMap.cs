@@ -26,5 +26,10 @@ public class UserEntityMap : IEntityTypeConfiguration<User>
             .IsRequired(false);
         
         builder.Property(p => p.ConcurrencyStamp).IsConcurrencyToken();
+        
+        builder.HasOne(_ => _.Registrant)
+            .WithOne()
+            .HasForeignKey<User>(_ => _.RegistrantId)
+            .IsRequired(false);
     }
 }

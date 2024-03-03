@@ -1,7 +1,10 @@
 using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
 using PersonnelManagement.Entities.Identities;
+using PersonnelManagement.UseCases.Infrastructure.TokenManager.Contracts;
+using PersonnelManagement.UseCases.Infrastructure.UserTokens.Contrects;
 using PersonnelManagement.UseCases.Personnel;
 using PersonnelManagement.UseCases.Personnel.Contracts;
 using PersonnelManagement.UseCases.Personnel.Contracts.Configs;
@@ -28,9 +31,13 @@ public class PersonnelServiceTests
             null,
             null,
             null);
+        var mockPersonnelRepository = new Mock<IPersonnelRepository>();
+        var mockTokenManagerService = new Mock<ITokenManagerService>();  
+        
         _personnelService = new PersonnelService(
-            userManager: _mockUserManager.Object,
-            new JwtBearerTokenSettings());
+            _mockUserManager.Object,
+            mockPersonnelRepository.Object,
+            mockTokenManagerService.Object);
     }
 
     [Fact]
@@ -41,13 +48,14 @@ public class PersonnelServiceTests
             lastName: "feyzipoor",
             phoneNumber: "09389066817",
             password: "Amir007");
+        var fakeRegistrantIdId = "b4134711-a12e-491a-9aa4-766d538846fb";
             
         _mockUserManager.Setup(_ => _.CreateAsync(
                 It.Is<User>(_ => _.PhoneNumber == dto.PhoneNumber),
                 It.Is<string>(_ => _ == dto.Password)))
             .ReturnsAsync(IdentityResult.Success);
 
-        await _personnelService.RegisterUser(dto);
+        await _personnelService.RegisterUser(fakeRegistrantIdId, dto);
     }
     
     [Fact]
@@ -58,8 +66,9 @@ public class PersonnelServiceTests
             lastName: "feyzipoor",
             phoneNumber: "dummyPhoneNumber",
             password: "Amir007");
+        var fakeRegistrantIdId = "b4134711-a12e-491a-9aa4-766d538846fb";
 
-        var expected = async () => await _personnelService.RegisterUser(dto);
+        var expected = async () => await _personnelService.RegisterUser(fakeRegistrantIdId, dto);
         
         await expected.Should().ThrowExactlyAsync<InvalidPhoneNumberException>();
     }

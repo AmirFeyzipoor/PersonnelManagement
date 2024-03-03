@@ -132,3 +132,4 @@ E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\De
 E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\Debug\net7.0\IPE.SmsIrClient.dll
 E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\Debug\net7.0\Kavenegar.dll
 E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\Debug\net7.0\Newtonsoft.Json.dll
+E:\SampleProjects\PersonnelManagement\Src\Api\PersonnelManagement.RestApi\bin\Debug\net7.0\Dapper.dll

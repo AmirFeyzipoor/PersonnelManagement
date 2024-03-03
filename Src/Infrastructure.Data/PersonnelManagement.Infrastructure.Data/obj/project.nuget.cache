@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "cygGdFzAzjvNWLaRQbbdRrX6vLQaBoPLBJCLV5fXKh0ff+LqZ/UxO9jUhiYNdF0xmN5GrTPaYGrveQx18tPfpA==",
+  "dgSpecHash": "LDnvnKFvsHbEv/GMaDr56oRSbcB8Nc0zGmal9S80qFnfGSwnIpBBPGbQeNglOYk7jK4Q3rhNId5s9R+eiIgwEw==",
   "success": true,
   "projectFilePath": "E:\\SampleProjects\\PersonnelManagement\\Src\\Infrastructure.Data\\PersonnelManagement.Infrastructure.Data\\PersonnelManagement.Infrastructure.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Amir\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
+    "C:\\Users\\Amir\\.nuget\\packages\\dapper\\2.1.15\\dapper.2.1.15.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\ipe.smsir\\1.0.5\\ipe.smsir.1.0.5.nupkg.sha512",
     "C:\\Users\\Amir\\.nuget\\packages\\kavenegar\\1.2.4\\kavenegar.1.2.4.nupkg.sha512",

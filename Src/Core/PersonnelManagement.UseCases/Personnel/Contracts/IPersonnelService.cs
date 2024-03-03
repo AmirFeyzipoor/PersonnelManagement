@@ -8,8 +8,10 @@ namespace PersonnelManagement.UseCases.Personnel.Contracts;
 public interface IPersonnelService : Service
 {
     Task<string> LoginUser(LoginUserDto dto);
-    Task<User> RegisterUser(RegisterPersonnelDto dto);
+    Task<User> RegisterUser(string registrantId, RegisterPersonnelDto dto);
     List<GetAllPersonnelDto> GetAll(
         GetAllPersonnelFilterDto filter, 
         ISort<GetAllPersonnelDto>? sort);
+
+    Task<GetNumberOfRegisteredUsersDto> GetNumberOfRegisteredUsers();
 }

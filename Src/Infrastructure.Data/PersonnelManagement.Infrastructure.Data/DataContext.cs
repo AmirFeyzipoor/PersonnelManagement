@@ -39,7 +39,7 @@ public class DataContext : IdentityDbContext<
         builder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public Task<int> SaveChangesAsync()
     {
         var modifiedEntities = ChangeTracker.Entries()
             .Where(e => e.State is EntityState.Added or EntityState.Modified)
@@ -58,7 +58,12 @@ public class DataContext : IdentityDbContext<
             Set<AuditLog>().Add(auditLog);
         }
 
-        return base.SaveChangesAsync(cancellationToken);
+        return base.SaveChangesAsync();
+    }
+    
+    public Task<int> SaveChangesAsyncForSeedData()
+    {
+        return base.SaveChangesAsync();
     }
 
     private static string GetChanges(EntityEntry entity)

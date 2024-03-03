@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
+using PersonnelManagement.UseCases.Infrastructure.UserTokens.Contrects;
 using PersonnelManagement.UseCases.Notifications;
 using PersonnelManagement.UseCases.Personnel.Contracts;
 using PersonnelManagement.UseCases.Personnel.Contracts.Dtos;
@@ -14,15 +15,18 @@ public class PersonnelController : ControllerBase
     private readonly IPersonnelService _personnelService;
     private readonly UriSortParser _sortParser;
     private readonly INotificationService _notificationService;
+    private readonly IUserTokenService _userTokenService;
 
     public PersonnelController(
         IPersonnelService personnelService,
         UriSortParser sortParser,
-        INotificationService notificationService)
+        INotificationService notificationService, 
+        IUserTokenService userTokenService)
     {
         _personnelService = personnelService;
         _sortParser = sortParser;
         _notificationService = notificationService;
+        _userTokenService = userTokenService;
     }
 
     [HttpPost("login")]
@@ -39,7 +43,9 @@ public class PersonnelController : ControllerBase
     [Authorize(Roles = "Admin")]
     public async Task<string> RegisterPersonnel(RegisterPersonnelDto dto)
     {
-        var user =  await _personnelService.RegisterUser(dto);
+        var userId = _userTokenService.UserId;
+        
+        var user =  await _personnelService.RegisterUser(userId!, dto);
 
         await _notificationService.SendSms(
             messageText: "با عرض خوش امدگویی ، ثبت نام شما" +
@@ -69,5 +75,12 @@ public class PersonnelController : ControllerBase
             null;
         
         return _personnelService.GetAll(filter, sortExpression);
+    }
+    
+    [HttpGet("get_number_of_registered_users")]
+    [Authorize(Roles = "Admin")]
+    public async Task<GetNumberOfRegisteredUsersDto> GetNumberOfRegisteredUsers()
+    {
+        return await _personnelService.GetNumberOfRegisteredUsers();
     }
 }

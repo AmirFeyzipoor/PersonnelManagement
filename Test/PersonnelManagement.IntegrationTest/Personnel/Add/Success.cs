@@ -1,8 +1,16 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Moq;
 using PersonnelManagement.Entities.Identities;
+using PersonnelManagement.Infrastructure.Data;
+using PersonnelManagement.Infrastructure.Data.Identities;
 using PersonnelManagement.IntegrationTest.Infrastructure;
+using PersonnelManagement.RestApi.Configs.ServiceConfigs;
+using PersonnelManagement.RestApi.Configs.ServiceConfigs.ServicesPrerequisites;
+using PersonnelManagement.UseCases.Infrastructure.TokenManager;
 using PersonnelManagement.UseCases.Personnel;
+using PersonnelManagement.UseCases.Personnel.Contracts;
 using PersonnelManagement.UseCases.Personnel.Contracts.Configs;
 using PersonnelManagement.UseCases.Personnel.Contracts.Dtos;
 
@@ -18,12 +26,13 @@ namespace PersonnelManagement.IntegrationTest.Personnel.Add;
     InOrderTo = "پرسنل را مدیریت کنم",
     IWantTo = "یک پرسنل و کاربر عادی را ثبت کنم")]
 [Scenario("ثبت پرسنل جدید")]
-public class Success
+public class Success : EFDataContextDatabaseFixture
 {
     private readonly Mock<UserManager<User>> _mockUserManager;
-    private RegisterPersonnelDto _dto;
+    private readonly IPersonnelService _personnelService;
+    private RegisterPersonnelDto? _dto;
 
-    public Success()
+    public Success(ConfigurationFixture configuration) : base(configuration)
     {
         var userStore = new Mock<IUserStore<User>>();
         _mockUserManager = new Mock<UserManager<User>>(
@@ -36,7 +45,14 @@ public class Success
             null,
             null,
             null);
+        var tokenManagerService = new TokenManagerService(new JwtBearerTokenSettings());
+        var personnelRepository = new DapperPersonnelRepository(CreateDapperContext());
         
+        _personnelService = new PersonnelService(
+            userManager: _mockUserManager.Object,
+            personnelRepository,
+            tokenManagerService);
+
     }
     
     [Given("هیچ پرسنل و کاربر عادی ای (به جز ادمین ها) در فهرست پرسنل وجود ندارد")]
@@ -54,6 +70,7 @@ public class Success
             lastName: "feyzipoor",
             phoneNumber: "09029380902",
             password: "Amir007");
+        var fakeRegistrantId = "b4134711-a12e-491a-9aa4-766d538846fb"; 
             
         _mockUserManager.Setup(_ => _.CreateAsync(
                 It.Is<User>(_ => _.PhoneNumber == _dto.PhoneNumber &&
@@ -62,11 +79,8 @@ public class Success
                                  _.Email == _dto.Email),
                 It.Is<string>(_ => _ == _dto.Password)))
             .ReturnsAsync(IdentityResult.Success);
-
-        var personnelService = new PersonnelService(
-            userManager: _mockUserManager.Object,
-            new JwtBearerTokenSettings());
-        await personnelService.RegisterUser(_dto);
+        
+        await _personnelService.RegisterUser(fakeRegistrantId, _dto);
     }
 
     [Then("باید تنها یک پرسنل و کاربر عادی (به جز ادمین ها)" +

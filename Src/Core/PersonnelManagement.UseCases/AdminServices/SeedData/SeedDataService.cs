@@ -56,7 +56,8 @@ public class SeedDataService : ISeedDataService
                         LastName = admin.AdminLastName,
                         PhoneNumber = admin.AdminPhoneNumber,
                         Email = admin.AdminEmail,
-                        CreationDate = DateTime.Now.ToUniversalTime()
+                        CreationDate = DateTime.Now.ToUniversalTime(),
+                        RegistrantId = null
                     };
                     
                     await _userManager.CreateAsync(user, admin.AdminPassword);

@@ -2,10 +2,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using PersonnelManagement.Entities.Identities;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
+using PersonnelManagement.UseCases.Infrastructure.TokenManager.Contracts;
 using PersonnelManagement.UseCases.Personnel.Contracts;
 using PersonnelManagement.UseCases.Personnel.Contracts.Configs;
 using PersonnelManagement.UseCases.Personnel.Contracts.Dtos;
@@ -17,15 +19,18 @@ namespace PersonnelManagement.UseCases.Personnel;
 public class PersonnelService : IPersonnelService
 {
     private readonly UserManager<User> _userManager;
-    private readonly JwtBearerTokenSettings _jwtBearerTokenSettings;
+    private readonly IPersonnelRepository _personnelRepository;
+    private readonly ITokenManagerService _tokenManagerService;
 
     private static readonly object _lock = new();
 
     public PersonnelService(UserManager<User> userManager,
-        JwtBearerTokenSettings jwtBearerTokenSettings)
+        IPersonnelRepository personnelRepository, 
+        ITokenManagerService tokenManagerService)
     {
         _userManager = userManager;
-        _jwtBearerTokenSettings = jwtBearerTokenSettings;
+        _personnelRepository = personnelRepository;
+        _tokenManagerService = tokenManagerService;
     }
 
     public async Task<string> LoginUser(LoginUserDto dto)
@@ -38,14 +43,14 @@ public class PersonnelService : IPersonnelService
 
         var userRoles = await _userManager.GetRolesAsync(user!);
 
-        return GenerateToken(user!.Id, userRoles);
+        return _tokenManagerService.GenerateToken(user!.Id, userRoles.ToList());
     }
 
-    public Task<User> RegisterUser(RegisterPersonnelDto dto)
+    public Task<User> RegisterUser(string userId, RegisterPersonnelDto dto)
     {
         StopIfInvalidPhoneNumber(dto.PhoneNumber);
-        
-        lock(_lock)
+
+        lock (_lock)
         {
             StopIfDuplicatedPhoneNumber(dto.PhoneNumber);
 
@@ -57,13 +62,14 @@ public class PersonnelService : IPersonnelService
                 LastName = dto.LastName,
                 PhoneNumber = dto.PhoneNumber,
                 Email = dto.Email,
-                CreationDate = DateTime.Now.ToUniversalTime()
+                CreationDate = DateTime.Now.ToUniversalTime(),
+                RegistrantId = userId
             };
 
             var result = _userManager.CreateAsync(user, dto.Password);
-            
+
             StopIfCreateUserFailed(result.Result);
-        
+
             return Task.FromResult(user);
         }
     }
@@ -88,6 +94,32 @@ public class PersonnelService : IPersonnelService
             personnel = personnel.Sort(sort);
 
         return personnel.ToList();
+    }
+
+    public async Task<GetNumberOfRegisteredUsersDto> GetNumberOfRegisteredUsers()
+    {
+        var users = await 
+            _personnelRepository.GetAllUserCreationDateWithRegistrantId();
+        return new GetNumberOfRegisteredUsersDto()
+        {
+            TotalCount = users.Count(),
+            UsersCountByDate = users.Select(_ => new
+                {
+                    Day = _.CreationDate.ToString("dd/MM/yyyy"), _.RegistrantId
+                })
+                .GroupBy(_ => _.Day)
+                .Select(_ => new GetNumberOfRegisteredUsersByDateDto()
+                {
+                    Date = _.Key,
+                    Count = _.Count(),
+                    UsersCountByRegistrant = _.GroupBy(_ => _.RegistrantId)
+                        .Select(_ => new GetNumberOfRegisteredUsersByRegistrantDto
+                        {
+                            RegisteredId = _.Key,
+                            Count = _.Count(),
+                        }).ToList()
+                }).ToList()
+        };
     }
 
     private static IQueryable<GetAllPersonnelDto> DoFilterOnPersonnel(
@@ -136,41 +168,6 @@ public class PersonnelService : IPersonnelService
             throw new WrongUserNameOrPasswordException();
     }
 
-    private string GenerateToken(string userId, IList<string> userRoles)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_jwtBearerTokenSettings.SecretKey);
-
-        var tokenClaims = new ClaimsIdentity();
-        tokenClaims.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));
-
-        WriteUserRolesToTokenClaims(ref tokenClaims, userRoles);
-
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = tokenClaims,
-
-            Expires = DateTime.UtcNow.AddSeconds(_jwtBearerTokenSettings.ExpiryTimeInSeconds),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha256Signature),
-            Audience = _jwtBearerTokenSettings.Audience,
-            Issuer = _jwtBearerTokenSettings.Issuer
-        };
-
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
-    }
-
-    private static void WriteUserRolesToTokenClaims(
-        ref ClaimsIdentity tokenClaims,
-        IEnumerable<string> userRoles)
-    {
-        foreach (var role in userRoles)
-        {
-            tokenClaims.AddClaim(new Claim(ClaimTypes.Role, role));
-        }
-    }
-
     private static void StopIfInvalidPhoneNumber(string phoneNumber)
     {
         var mobileReg = @"^(0|0098|\+98)9(0[1-5]|[1 3]\d|2[0-2]|98)\d{7}$";
@@ -180,7 +177,7 @@ public class PersonnelService : IPersonnelService
             throw new InvalidPhoneNumberException();
         }
     }
-    
+
     public static string RemoveWhitespace(string input)
     {
         return new string(input.ToCharArray()
