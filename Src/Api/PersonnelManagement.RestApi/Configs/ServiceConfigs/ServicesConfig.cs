@@ -180,6 +180,10 @@ public static class ServicesConfig
                 .AssignableTo<Repository>()
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
+            
+            builder.RegisterType<UnitOfWork>()
+                .As<IUnitOfWork>()
+                .InstancePerLifetimeScope();
         }
     }
 }

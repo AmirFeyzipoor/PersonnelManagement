@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using PersonnelManagement.Entities.AuditLogs;
 using PersonnelManagement.Entities.Identities;
 
@@ -20,17 +21,15 @@ public class DataContext : IdentityDbContext<
     IdentityRoleClaim<string>,
     IdentityUserToken<string>>
 {
-    private readonly IHttpContextAccessor _accessor;
-    public DataContext(string connectionString, IHttpContextAccessor accessor)
+    public DataContext(string connectionString)
         : this(new DbContextOptionsBuilder<DataContext>()
-            .UseSqlServer(connectionString).Options, accessor)
+            .UseSqlServer(connectionString).Options)
     {
     }
 
-    private DataContext(DbContextOptions<DataContext> options, IHttpContextAccessor accessor)
+    private DataContext(DbContextOptions<DataContext> options)
         : base(options)
     {
-        _accessor = accessor;
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -39,17 +38,17 @@ public class DataContext : IdentityDbContext<
         builder.ApplyConfigurationsFromAssembly(typeof(DataContext).Assembly);
     }
 
-    public Task<int> SaveChangesAsync()
+    public Task<int> SaveChangesAsync(string userId)
     {
         var modifiedEntities = ChangeTracker.Entries()
             .Where(e => e.State is EntityState.Added or EntityState.Modified)
             .ToList();
-
+    
         foreach (var auditLog in modifiedEntities.Select(modifiedEntity => new AuditLog
                  {
-                     UserId = _accessor.HttpContext!.User.Claims
-                         .FirstOrDefault(_ => _.Type == ClaimTypes.NameIdentifier)?.Value!,
+                     UserId = userId,
                      EntityName = modifiedEntity.Entity.GetType().Name,
+                     EntityPrimaryKey = GetEntityPrimaryKey(modifiedEntity),
                      Action = modifiedEntity.State.ToString(),
                      Timestamp = DateTime.UtcNow,
                      Changes = GetChanges(modifiedEntity)
@@ -57,12 +56,7 @@ public class DataContext : IdentityDbContext<
         {
             Set<AuditLog>().Add(auditLog);
         }
-
-        return base.SaveChangesAsync();
-    }
     
-    public Task<int> SaveChangesAsyncForSeedData()
-    {
         return base.SaveChangesAsync();
     }
 
@@ -82,5 +76,13 @@ public class DataContext : IdentityDbContext<
         }
 
         return changes.ToString();
+    }
+    
+    private static string GetEntityPrimaryKey(EntityEntry entity)
+    {
+        return (from property in entity.Properties
+                where property.Metadata.IsPrimaryKey()
+                select property.CurrentValue.ToString())
+                .First()!;
     }
 }

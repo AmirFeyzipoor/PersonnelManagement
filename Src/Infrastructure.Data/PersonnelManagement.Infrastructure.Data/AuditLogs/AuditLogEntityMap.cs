@@ -16,5 +16,6 @@ public class AuditLogEntityMap : IEntityTypeConfiguration<AuditLog>
         builder.Property(_ => _.EntityName).IsRequired();
         builder.Property(_ => _.Timestamp).IsRequired();
         builder.Property(_ => _.Changes).IsRequired();
+        builder.Property(_ => _.EntityPrimaryKey).IsRequired();
     }
 }

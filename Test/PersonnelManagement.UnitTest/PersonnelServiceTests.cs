@@ -2,7 +2,10 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Moq;
+using PersonnelManagement.Entities.AuditLogs;
 using PersonnelManagement.Entities.Identities;
+using PersonnelManagement.UseCases.Infrastructure;
+using PersonnelManagement.UseCases.Infrastructure.AuditLogs;
 using PersonnelManagement.UseCases.Infrastructure.TokenManager.Contracts;
 using PersonnelManagement.UseCases.Infrastructure.UserTokens.Contrects;
 using PersonnelManagement.UseCases.Personnel;
@@ -17,6 +20,8 @@ public class PersonnelServiceTests
 {
     private readonly Mock<UserManager<User>> _mockUserManager;
     private readonly IPersonnelService _personnelService;
+    private readonly Mock<IUnitOfWork> _mockUnitOfWork;
+    private readonly Mock<IAuditLogRepository> _mockAuditLogRepository;
 
     public PersonnelServiceTests()
     {
@@ -32,12 +37,16 @@ public class PersonnelServiceTests
             null,
             null);
         var mockPersonnelRepository = new Mock<IPersonnelRepository>();
-        var mockTokenManagerService = new Mock<ITokenManagerService>();  
+        var mockTokenManagerService = new Mock<ITokenManagerService>();
+        _mockUnitOfWork = new Mock<IUnitOfWork>();
+        _mockAuditLogRepository = new Mock<IAuditLogRepository>();
         
         _personnelService = new PersonnelService(
             _mockUserManager.Object,
             mockPersonnelRepository.Object,
-            mockTokenManagerService.Object);
+            mockTokenManagerService.Object,
+            _mockAuditLogRepository.Object,
+            _mockUnitOfWork.Object);
     }
 
     [Fact]
@@ -56,6 +65,10 @@ public class PersonnelServiceTests
             .ReturnsAsync(IdentityResult.Success);
 
         await _personnelService.RegisterUser(fakeRegistrantIdId, dto);
+        
+        _mockAuditLogRepository.Verify(_ => _.AddLog(
+            It.IsAny<AuditLog>()));
+        _mockUnitOfWork.Verify(_ => _.Complete());
     }
     
     [Fact]

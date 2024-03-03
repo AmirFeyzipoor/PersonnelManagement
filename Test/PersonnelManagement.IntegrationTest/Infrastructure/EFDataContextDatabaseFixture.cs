@@ -16,5 +16,10 @@ namespace PersonnelManagement.IntegrationTest.Infrastructure
         {
             return new DapperDataContext(_configuration.Value.ConnectionString);
         }
+        
+        public DataContext CreateDataContext()
+        {
+            return new DataContext(_configuration.Value.ConnectionString);
+        }
     }
 }

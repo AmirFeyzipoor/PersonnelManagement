@@ -133,3 +133,6 @@ E:\SampleProjects\PersonnelManagement\Test\PersonnelManagement.UnitTest\bin\Debu
 E:\SampleProjects\PersonnelManagement\Test\PersonnelManagement.UnitTest\bin\Debug\net7.0\Microsoft.AspNetCore.Http.Features.dll
 E:\SampleProjects\PersonnelManagement\Test\PersonnelManagement.UnitTest\bin\Debug\net7.0\Microsoft.Net.Http.Headers.dll
 E:\SampleProjects\PersonnelManagement\Test\PersonnelManagement.UnitTest\bin\Debug\net7.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+E:\SampleProjects\PersonnelManagement\Test\PersonnelManagement.UnitTest\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.dll
+E:\SampleProjects\PersonnelManagement\Test\PersonnelManagement.UnitTest\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+E:\SampleProjects\PersonnelManagement\Test\PersonnelManagement.UnitTest\bin\Debug\net7.0\Microsoft.Extensions.Caching.Memory.dll

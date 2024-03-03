@@ -1,11 +1,17 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.IdentityModel.Tokens;
+using PersonnelManagement.Entities.AuditLogs;
 using PersonnelManagement.Entities.Identities;
+using PersonnelManagement.UseCases.Infrastructure;
+using PersonnelManagement.UseCases.Infrastructure.AuditLogs;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
 using PersonnelManagement.UseCases.Infrastructure.TokenManager.Contracts;
 using PersonnelManagement.UseCases.Personnel.Contracts;
@@ -21,16 +27,22 @@ public class PersonnelService : IPersonnelService
     private readonly UserManager<User> _userManager;
     private readonly IPersonnelRepository _personnelRepository;
     private readonly ITokenManagerService _tokenManagerService;
+    private readonly IAuditLogRepository _auditLogRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
     private static readonly object _lock = new();
 
     public PersonnelService(UserManager<User> userManager,
         IPersonnelRepository personnelRepository, 
-        ITokenManagerService tokenManagerService)
+        ITokenManagerService tokenManagerService, 
+        IAuditLogRepository auditLogRepository,
+        IUnitOfWork unitOfWork)
     {
         _userManager = userManager;
         _personnelRepository = personnelRepository;
         _tokenManagerService = tokenManagerService;
+        _auditLogRepository = auditLogRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<string> LoginUser(LoginUserDto dto)
@@ -50,28 +62,21 @@ public class PersonnelService : IPersonnelService
     {
         StopIfInvalidPhoneNumber(dto.PhoneNumber);
 
+        var user = GenerateUser(userId, dto);
+        
         lock (_lock)
         {
             StopIfDuplicatedPhoneNumber(dto.PhoneNumber);
-
-            var user = new User
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = dto.Name,
-                UserName = RemoveWhitespace(dto.Name + Guid.NewGuid()),
-                LastName = dto.LastName,
-                PhoneNumber = dto.PhoneNumber,
-                Email = dto.Email,
-                CreationDate = DateTime.Now.ToUniversalTime(),
-                RegistrantId = userId
-            };
-
+            
             var result = _userManager.CreateAsync(user, dto.Password);
-
             StopIfCreateUserFailed(result.Result);
-
-            return Task.FromResult(user);
         }
+
+        GenerateLog(userId, user);
+
+        _unitOfWork.Complete();
+
+        return Task.FromResult(user);
     }
 
     public List<GetAllPersonnelDto> GetAll(
@@ -183,5 +188,35 @@ public class PersonnelService : IPersonnelService
         return new string(input.ToCharArray()
             .Where(c => !Char.IsWhiteSpace(c))
             .ToArray());
+    }
+    
+    private void GenerateLog(string userId, User user)
+    {
+        var log = new AuditLog
+        {
+            UserId = userId,
+            EntityName = user.GetType().Name,
+            EntityPrimaryKey = user.Id,
+            Action = EntityState.Added.ToString(),
+            Timestamp = DateTime.UtcNow,
+            Changes = new StringBuilder().ToString()
+        };
+        _auditLogRepository.AddLog(log);
+    }
+    
+    private static User GenerateUser(string userId, RegisterPersonnelDto dto)
+    {
+        var user = new User
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = dto.Name,
+            UserName = RemoveWhitespace(dto.Name + Guid.NewGuid()),
+            LastName = dto.LastName,
+            PhoneNumber = dto.PhoneNumber,
+            Email = dto.Email,
+            CreationDate = DateTime.Now.ToUniversalTime(),
+            RegistrantId = userId
+        };
+        return user;
     }
 }

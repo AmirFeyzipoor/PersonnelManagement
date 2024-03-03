@@ -21,18 +21,17 @@ public class UnitOfWork : IUnitOfWork
         await _dataContext.SaveChangesAsync();
         await _dataContext.Database.CommitTransactionAsync();
     }
-    
-    public async Task CommitForSeedData()
-    {
-        await _dataContext.SaveChangesAsyncForSeedData();
-        await _dataContext.Database.CommitTransactionAsync();
-    }
 
     public async Task Rollback()
     {
         await _dataContext.Database.RollbackTransactionAsync();
     }
 
+    public async Task Complete(string userId)
+    {
+        await _dataContext.SaveChangesAsync(userId);
+    }
+    
     public async Task Complete()
     {
         await _dataContext.SaveChangesAsync();
