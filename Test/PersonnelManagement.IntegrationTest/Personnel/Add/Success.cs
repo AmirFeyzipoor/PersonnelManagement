@@ -100,7 +100,7 @@ public class Success : EFDataContextDatabaseFixture
             It.Is<User>(_ => _.PhoneNumber == _dto!.PhoneNumber),
             It.Is<string>(_ => _ == _dto!.Password)));
 
-        var actual = await _readDataContext.Set<AuditLog>().ToListAsync();
+        var actual = await _readDataContext.Set<UserAuditLog>().ToListAsync();
         actual.Should().HaveCount(1);
         actual.First().Action.Should().Be(EntityState.Added.ToString());
     }

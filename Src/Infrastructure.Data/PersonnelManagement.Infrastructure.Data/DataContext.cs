@@ -41,22 +41,24 @@ public class DataContext : IdentityDbContext<
     public Task<int> SaveChangesAsync(string userId)
     {
         var modifiedEntities = ChangeTracker.Entries()
-            .Where(e => e.State is EntityState.Added or EntityState.Modified)
+            .Where(e =>
+                e.GetType() == typeof(User) &&
+                e.State is EntityState.Added or EntityState.Modified)
             .ToList();
-    
-        foreach (var auditLog in modifiedEntities.Select(modifiedEntity => new AuditLog
-                 {
-                     UserId = userId,
-                     EntityName = modifiedEntity.Entity.GetType().Name,
-                     EntityPrimaryKey = GetEntityPrimaryKey(modifiedEntity),
-                     Action = modifiedEntity.State.ToString(),
-                     Timestamp = DateTime.UtcNow,
-                     Changes = GetChanges(modifiedEntity)
-                 }))
+
+        foreach (var auditLog in modifiedEntities.Select(modifiedEntity =>
+                     new UserAuditLog
+                     {
+                         RegistrantId = userId,
+                         UserId = modifiedEntity.OriginalValues["Id"]!.ToString()!,
+                         Action = modifiedEntity.State.ToString(),
+                         Timestamp = DateTime.UtcNow,
+                         Changes = GetChanges(modifiedEntity)
+                     }))
         {
-            Set<AuditLog>().Add(auditLog);
+            Set<UserAuditLog>().Add(auditLog);
         }
-    
+
         return base.SaveChangesAsync();
     }
 
@@ -77,12 +79,12 @@ public class DataContext : IdentityDbContext<
 
         return changes.ToString();
     }
-    
+
     private static string GetEntityPrimaryKey(EntityEntry entity)
     {
         return (from property in entity.Properties
                 where property.Metadata.IsPrimaryKey()
                 select property.CurrentValue.ToString())
-                .First()!;
+            .First()!;
     }
 }

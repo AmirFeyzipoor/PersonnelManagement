@@ -4,18 +4,21 @@ using PersonnelManagement.Entities.AuditLogs;
 
 namespace PersonnelManagement.Infrastructure.Data.AuditLogs;
 
-public class AuditLogEntityMap : IEntityTypeConfiguration<AuditLog>
+public class AuditLogEntityMap : IEntityTypeConfiguration<UserAuditLog>
 {
-    public void Configure(EntityTypeBuilder<AuditLog> builder)
+    public void Configure(EntityTypeBuilder<UserAuditLog> builder)
     {
-        builder.ToTable("AuditLogs");
+        builder.ToTable("UserAuditLogs");
         
         builder.Property(_ => _.Id).IsRequired().ValueGeneratedOnAdd();
         builder.Property(_ => _.UserId).IsRequired();
         builder.Property(_ => _.Action).IsRequired();
-        builder.Property(_ => _.EntityName).IsRequired();
+        builder.Property(_ => _.RegistrantId).IsRequired();
         builder.Property(_ => _.Timestamp).IsRequired();
         builder.Property(_ => _.Changes).IsRequired();
-        builder.Property(_ => _.EntityPrimaryKey).IsRequired();
+
+        builder.HasOne(_ => _.User)
+            .WithMany(_ => _.Logs)
+            .HasForeignKey(_ => _.UserId);
     }
 }

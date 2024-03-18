@@ -4,5 +4,5 @@ namespace PersonnelManagement.UseCases.Infrastructure.AuditLogs;
 
 public interface IAuditLogRepository : Repository
 {
-    void AddLog(AuditLog log);
+    void AddLog(UserAuditLog log);
 }

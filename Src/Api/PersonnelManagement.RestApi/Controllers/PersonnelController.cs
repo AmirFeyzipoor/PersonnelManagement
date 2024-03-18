@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PersonnelManagement.UseCases.Infrastructure.PaginationUtilities;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
 using PersonnelManagement.UseCases.Infrastructure.UserTokens.Contrects;
 using PersonnelManagement.UseCases.Notifications;
@@ -66,15 +67,21 @@ public class PersonnelController : ControllerBase
     
     [HttpGet]
     [Authorize(Roles = "Admin")]
-    public List<GetAllPersonnelDto> GetAll(
+    public async Task<IPageResult<GetAllPersonnelDto>> GetAll(
         [FromQuery] GetAllPersonnelFilterDto filter,
-        [FromQuery] string? sort)
+        [FromQuery] string? sort,
+        [FromQuery] int? limit,
+        [FromQuery] int? offset)
     {
         var sortExpression = !string.IsNullOrEmpty(sort) ?
             _sortParser.Parse<GetAllPersonnelDto>(sort) :
             null;
         
-        return _personnelService.GetAll(filter, sortExpression);
+        var pagination = limit.HasValue && offset.HasValue ?
+            Pagination.Of(offset.Value + 1, limit.Value) :
+            null;
+        
+        return await _personnelService.GetAll(filter, sortExpression, pagination);
     }
     
     [HttpGet("get_number_of_registered_users")]

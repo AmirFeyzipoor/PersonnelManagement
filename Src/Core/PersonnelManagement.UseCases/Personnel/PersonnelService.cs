@@ -12,6 +12,7 @@ using PersonnelManagement.Entities.AuditLogs;
 using PersonnelManagement.Entities.Identities;
 using PersonnelManagement.UseCases.Infrastructure;
 using PersonnelManagement.UseCases.Infrastructure.AuditLogs;
+using PersonnelManagement.UseCases.Infrastructure.PaginationUtilities;
 using PersonnelManagement.UseCases.Infrastructure.SortUtilities;
 using PersonnelManagement.UseCases.Infrastructure.TokenManager.Contracts;
 using PersonnelManagement.UseCases.Personnel.Contracts;
@@ -33,8 +34,8 @@ public class PersonnelService : IPersonnelService
     private static readonly object _lock = new();
 
     public PersonnelService(UserManager<User> userManager,
-        IPersonnelRepository personnelRepository, 
-        ITokenManagerService tokenManagerService, 
+        IPersonnelRepository personnelRepository,
+        ITokenManagerService tokenManagerService,
         IAuditLogRepository auditLogRepository,
         IUnitOfWork unitOfWork)
     {
@@ -63,11 +64,11 @@ public class PersonnelService : IPersonnelService
         StopIfInvalidPhoneNumber(dto.PhoneNumber);
 
         var user = GenerateUser(userId, dto);
-        
+
         lock (_lock)
         {
             StopIfDuplicatedPhoneNumber(dto.PhoneNumber);
-            
+
             var result = _userManager.CreateAsync(user, dto.Password);
             StopIfCreateUserFailed(result.Result);
         }
@@ -79,9 +80,9 @@ public class PersonnelService : IPersonnelService
         return Task.FromResult(user);
     }
 
-    public List<GetAllPersonnelDto> GetAll(
-        GetAllPersonnelFilterDto filter,
-        ISort<GetAllPersonnelDto>? sort)
+    public async Task<IPageResult<GetAllPersonnelDto>> GetAll(GetAllPersonnelFilterDto filter,
+        ISort<GetAllPersonnelDto>? sort,
+        Pagination? pagination)
     {
         var personnel = _userManager.Users
             .Select(_ => new GetAllPersonnelDto
@@ -98,32 +99,63 @@ public class PersonnelService : IPersonnelService
         if (sort != null)
             personnel = personnel.Sort(sort);
 
-        return personnel.ToList();
+        if (pagination != null)
+        {
+            var finalResult = await personnel.Page(pagination).ToListAsync();
+            return new PageResult<GetAllPersonnelDto>(
+                finalResult, finalResult.Count);
+        }
+
+        return new PageResult<GetAllPersonnelDto>(
+            personnel, personnel.ToList().Count);
     }
 
     public async Task<GetNumberOfRegisteredUsersDto> GetNumberOfRegisteredUsers()
     {
-        var users = await 
-            _personnelRepository.GetAllUserCreationDateWithRegistrantId();
+        // var users = await 
+        //     _personnelRepository.GetAllUserCreationDateWithRegistrantId();
+        // return new GetNumberOfRegisteredUsersDto()
+        // {
+        //     TotalCount = users.Count(),
+        //     UsersCountByDate = users.Select(_ => new
+        //         {
+        //             Day = _.CreationDate.ToString("dd/MM/yyyy"), _.RegistrantId
+        //         })
+        //         .GroupBy(_ => _.Day)
+        //         .Select(_ => new GetNumberOfRegisteredUsersByDateDto()
+        //         {
+        //             Date = _.Key,
+        //             Count = _.Count(),
+        //             UsersCountByRegistrant = _.GroupBy(_ => _.RegistrantId)
+        //                 .Select(_ => new GetNumberOfRegisteredUsersByRegistrantDto
+        //                 {
+        //                     RegisteredId = _.Key,
+        //                     Count = _.Count(),
+        //                 }).ToList()
+        //         }).ToList()
+        // };
+
         return new GetNumberOfRegisteredUsersDto()
         {
-            TotalCount = users.Count(),
-            UsersCountByDate = users.Select(_ => new
-                {
-                    Day = _.CreationDate.ToString("dd/MM/yyyy"), _.RegistrantId
-                })
-                .GroupBy(_ => _.Day)
+            TotalCount = _userManager.Users.Count(),
+            UsersCountByDate = await _userManager.Users
+                // .Select(_ => new
+                // {
+                //     Day = _.CreationDate.ToString("dd/MM/yyyy"), _.RegistrantId
+                // })
+                .GroupBy(_ => _.CreationDate.Date)
                 .Select(_ => new GetNumberOfRegisteredUsersByDateDto()
                 {
-                    Date = _.Key,
+                    Date = _.Key.ToString("dd/MM/yyyy"),
                     Count = _.Count(),
                     UsersCountByRegistrant = _.GroupBy(_ => _.RegistrantId)
+                        .Where(_ => _.Key != null)
                         .Select(_ => new GetNumberOfRegisteredUsersByRegistrantDto
                         {
                             RegisteredId = _.Key,
                             Count = _.Count(),
                         }).ToList()
-                }).ToList()
+                }).ToListAsync()
         };
     }
 
@@ -189,21 +221,20 @@ public class PersonnelService : IPersonnelService
             .Where(c => !Char.IsWhiteSpace(c))
             .ToArray());
     }
-    
+
     private void GenerateLog(string userId, User user)
     {
-        var log = new AuditLog
+        var log = new UserAuditLog
         {
-            UserId = userId,
-            EntityName = user.GetType().Name,
-            EntityPrimaryKey = user.Id,
+            UserId = user.Id,
+            RegistrantId = userId,
             Action = EntityState.Added.ToString(),
             Timestamp = DateTime.UtcNow,
             Changes = new StringBuilder().ToString()
         };
         _auditLogRepository.AddLog(log);
     }
-    
+
     private static User GenerateUser(string userId, RegisterPersonnelDto dto)
     {
         var user = new User

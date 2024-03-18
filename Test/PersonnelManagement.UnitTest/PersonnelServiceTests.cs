@@ -67,7 +67,7 @@ public class PersonnelServiceTests
         await _personnelService.RegisterUser(fakeRegistrantIdId, dto);
         
         _mockAuditLogRepository.Verify(_ => _.AddLog(
-            It.IsAny<AuditLog>()));
+            It.IsAny<UserAuditLog>()));
         _mockUnitOfWork.Verify(_ => _.Complete());
     }
     
